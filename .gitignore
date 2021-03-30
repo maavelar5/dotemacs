@@ -1,0 +1,17 @@
+.emacs.d/auto-save-list/
+*~
+.emacs.d/elpa/archives/
+*bin/*
+.emacs.d/*.txt
+*.txt
+eshell
+smex-items
+url
+transient
+ido.last
+recentf
+tramp
+projectile-bookmarks.eld
+.emacs.d/elpa/*
+!.emacs.d/elpa/bind-key*
+!.emacs.d/elpa/use-package*
