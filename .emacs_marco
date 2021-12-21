@@ -21,7 +21,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(manoj-dark))
  '(custom-safe-themes
-   '("23b564cfb74d784c73167d7de1b9a067bcca00719f81e46d09ee71a12ef7ee82" default))
+   '("57b7a22240508a8eb008a4b29d4c68f91f3b8e9ed60444c50d76d5fa8f9335e9" "7e22a8dcf2adcd8b330eab2ed6023fa20ba3b17704d4b186fa9c53f1fab3d4d2" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" default))
  '(hl-todo-keyword-faces
    '(("HOLD" . "#cfdf30")
      ("TODO" . "#feacd0")
@@ -49,12 +49,12 @@
      mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position
      (vc-mode vc-mode)
      "  " "%m  " mode-line-misc-info mode-line-end-spaces))
- '(org-src-block-faces 'nil)
- '(package-selected-packages
-   '(evil sexy-monochrome-theme python-black smex ido-vertical-mode w3m company-arduino arduino-mode flycheck-grammarly org-inline-pdf org-preview-html flyspell-correct ivy-posframe which-key emacsql-mysql yaml-mode yaml multi-term ag yasnippet-snippets winum web-mode vterm use-package tide smart-tab slime rainbow-delimiters pug-mode prettier lsp-ui lsp-ivy js2-mode hl-todo highlight-numbers highlight-indentation highlight-indent-guides glsl-mode git-gutter+ fira-code-mode exwm exec-path-from-shell dotenv-mode desktop-environment counsel-projectile company column-enforce-mode color-identifiers-mode clang-format avy-zap))
+ '(package-selected-packages '(company-box use-package))
  '(safe-local-variable-values
    '((projectile-project-run-cmd . "./lighting_tale.exe")
-     (projectile-project-compilation-cmd . "make; ./lighting_tale.exe"))))
+     (projectile-project-compilation-cmd . "make; ./lighting_tale.exe")
+     (projectile-project-run-cmd . "./snako.exe")
+     (projectile-project-compilation-cmd . "make; ./snako.exe"))))
 
 (use-package js2-mode :ensure t)
 (use-package exwm :ensure t)
@@ -65,7 +65,6 @@
 (use-package git-gutter+ :ensure t)
 (use-package yasnippet-snippets :ensure t)
 (use-package yasnippet :ensure t)
-;; (use-package company-box :ensure t)
 (use-package glsl-mode :ensure t)
 (use-package lsp-ivy :ensure t)
 (use-package lsp-mode :ensure t)
@@ -92,7 +91,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 119 :family "Liberation Mono"))))
- '(column-enforce-face ((t (:foreground "gray30"))))
  '(cursor ((t (:background "orchid"))))
  '(mode-line ((t (:background "black" :foreground "white" :box (:line-width 1 :color "cyan") :height 1.0))))
  '(mode-line-buffer-id ((t (:background "black" :foreground "yellow1" :weight bold :height 1.0))))
@@ -165,6 +163,8 @@
         (avy-goto-word-0 . avy-order-closest)
         (avy-goto-line . avy-order-closest)))
 
+(load-file "~/.emacs.d/marco-weird.el")
+
 (desktop-environment-mode)
 
 (setq-default indent-tabs-mode nil)
@@ -190,103 +190,7 @@
 (setq lsp-ui-doc-enable nil)
 (setq lsp-completion-enable-additional-text-edit nil)
 
-(setq lsp-ui-sideline-show-diagnostics nil)
-;; (setq lsp-ui-sideline-enable nil)
-
 (setq web-mode-enable-current-element-highlight t)
-
-;; (doom-modeline-mode)
-
-(defun vertical-split-move()
-  (interactive)
-  (split-window-right)
-  (other-window 1))
-
-(defun horizontal-split-move()
-  (interactive)
-  (split-window-below)
-  (other-window 1))
-
-(defun term-split ()
-  (interactive)
-  (vertical-split-move)
-  (multi-term))
-
-(global-set-key (kbd "C-c e") 'counsel-M-x)
-(global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "C-c i") 'counsel-imenu)
-;; (global-set-key (kbd "C-c i") 'idomenu)
-;; (global-set-key (kbd "C-c e") 'smex)
-(global-set-key (kbd "C-x C-s") 'delete-whitespace-and-save)
-(global-set-key (kbd "C-c a") 'avy-goto-char)
-(global-set-key (kbd "C-;") 'comment-line)
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
-(global-set-key (kbd "C-c c") 'projectile-compile-project)
-(global-set-key (kbd "C-c r") 'projectile-run-project)
-(global-set-key (kbd "C-c n") 'next-buffer)
-(global-set-key (kbd "C-c p") 'previous-buffer)
-(global-set-key (kbd "C-c f") 'projectile-find-file)
-(global-set-key (kbd "C-c t") 'term-split)
-;; (global-set-key (kbd "C-s") 'ioccur)
-;; (global-set-key (kbd "C-c s") 'counsel-projectile-ag)
-
-(setq search-whitespace-regexp ".*?")
-
-(global-set-key (kbd "C-z") 'do-it-right)
-
-(global-set-key (kbd "C-x 2") 'horizontal-split-move)
-(global-set-key (kbd "C-x 3") 'vertical-split-move)
-
-(global-set-key (kbd "C-c g n") 'next-error)
-(global-set-key (kbd "C-c g p") 'previous-error)
-(global-set-key (kbd "C-c g d") 'lsp-find-definition)
-(global-set-key (kbd "C-c g r") 'lsp-find-references)
-(global-set-key (kbd "C-c g a") 'counsel-ag)
-(global-set-key (kbd "C-c g g") 'lsp-ivy-workspace-symbol)
-
-
-(use-package tide :ensure t)
-(use-package company :ensure t)
-(use-package flycheck :ensure t)
-
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-
-;; formats the buffer before saving
-;; (add-hook 'before-save-hook 'tide-format-before-save)
-
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-(require 'web-mode)
-
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
-
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "ts" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-
-
-;; enable typescript - tslint checker
-(flycheck-add-mode 'typescript-tslint 'web-mode)
 
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
 
@@ -297,10 +201,3 @@
 (define-key gud-minor-mode-map (kbd "<f6>") 'gud-cont)
 (define-key gud-minor-mode-map (kbd "<f4>") 'gud-break)
 (define-key gud-minor-mode-map (kbd "<f7>") 'gud-step)
-
-;; (ido-mode)
-;; (smex-initialize)
-;; (flx-ido-mode)
-
-;; (ido-vertical-mode)
-;; (define-key ido-mode-)

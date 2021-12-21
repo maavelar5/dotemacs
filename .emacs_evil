@@ -5,6 +5,7 @@
 
 (require 'package)
 
+(setq evil-want-keybinding nil)
 ;;; Code:
 
 (setq package-archives
@@ -51,7 +52,7 @@
      "  " "%m  " mode-line-misc-info mode-line-end-spaces))
  '(org-src-block-faces 'nil)
  '(package-selected-packages
-   '(evil sexy-monochrome-theme python-black smex ido-vertical-mode w3m company-arduino arduino-mode flycheck-grammarly org-inline-pdf org-preview-html flyspell-correct ivy-posframe which-key emacsql-mysql yaml-mode yaml multi-term ag yasnippet-snippets winum web-mode vterm use-package tide smart-tab slime rainbow-delimiters pug-mode prettier lsp-ui lsp-ivy js2-mode hl-todo highlight-numbers highlight-indentation highlight-indent-guides glsl-mode git-gutter+ fira-code-mode exwm exec-path-from-shell dotenv-mode desktop-environment counsel-projectile company column-enforce-mode color-identifiers-mode clang-format avy-zap))
+   '(evil-collection evil sexy-monochrome-theme python-black smex ido-vertical-mode w3m company-arduino arduino-mode flycheck-grammarly org-inline-pdf org-preview-html flyspell-correct ivy-posframe which-key emacsql-mysql yaml-mode yaml multi-term ag yasnippet-snippets winum web-mode vterm use-package tide smart-tab slime rainbow-delimiters pug-mode prettier lsp-ui lsp-ivy js2-mode hl-todo highlight-numbers highlight-indentation highlight-indent-guides glsl-mode git-gutter+ fira-code-mode exwm exec-path-from-shell dotenv-mode desktop-environment counsel-projectile company column-enforce-mode color-identifiers-mode clang-format avy-zap))
  '(safe-local-variable-values
    '((projectile-project-run-cmd . "./lighting_tale.exe")
      (projectile-project-compilation-cmd . "make; ./lighting_tale.exe"))))
@@ -85,6 +86,8 @@
 (use-package color-identifiers-mode :ensure t)
 (use-package clang-format :ensure t)
 (use-package avy-zap :ensure t)
+(use-package evil :ensure t)
+(use-package evil-collection :ensure t)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -93,7 +96,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 119 :family "Liberation Mono"))))
  '(column-enforce-face ((t (:foreground "gray30"))))
- '(cursor ((t (:background "orchid"))))
+ '(cursor ((t (:background "green"))))
  '(mode-line ((t (:background "black" :foreground "white" :box (:line-width 1 :color "cyan") :height 1.0))))
  '(mode-line-buffer-id ((t (:background "black" :foreground "yellow1" :weight bold :height 1.0))))
  '(mode-line-inactive ((t (:background "black" :foreground "white" :box (:line-width 1 :color "dim gray") :weight light :height 1.0))))
@@ -195,8 +198,6 @@
 
 (setq web-mode-enable-current-element-highlight t)
 
-;; (doom-modeline-mode)
-
 (defun vertical-split-move()
   (interactive)
   (split-window-right)
@@ -211,39 +212,6 @@
   (interactive)
   (vertical-split-move)
   (multi-term))
-
-(global-set-key (kbd "C-c e") 'counsel-M-x)
-(global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "C-c i") 'counsel-imenu)
-;; (global-set-key (kbd "C-c i") 'idomenu)
-;; (global-set-key (kbd "C-c e") 'smex)
-(global-set-key (kbd "C-x C-s") 'delete-whitespace-and-save)
-(global-set-key (kbd "C-c a") 'avy-goto-char)
-(global-set-key (kbd "C-;") 'comment-line)
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
-(global-set-key (kbd "C-c c") 'projectile-compile-project)
-(global-set-key (kbd "C-c r") 'projectile-run-project)
-(global-set-key (kbd "C-c n") 'next-buffer)
-(global-set-key (kbd "C-c p") 'previous-buffer)
-(global-set-key (kbd "C-c f") 'projectile-find-file)
-(global-set-key (kbd "C-c t") 'term-split)
-;; (global-set-key (kbd "C-s") 'ioccur)
-;; (global-set-key (kbd "C-c s") 'counsel-projectile-ag)
-
-(setq search-whitespace-regexp ".*?")
-
-(global-set-key (kbd "C-z") 'do-it-right)
-
-(global-set-key (kbd "C-x 2") 'horizontal-split-move)
-(global-set-key (kbd "C-x 3") 'vertical-split-move)
-
-(global-set-key (kbd "C-c g n") 'next-error)
-(global-set-key (kbd "C-c g p") 'previous-error)
-(global-set-key (kbd "C-c g d") 'lsp-find-definition)
-(global-set-key (kbd "C-c g r") 'lsp-find-references)
-(global-set-key (kbd "C-c g a") 'counsel-ag)
-(global-set-key (kbd "C-c g g") 'lsp-ivy-workspace-symbol)
-
 
 (use-package tide :ensure t)
 (use-package company :ensure t)
@@ -298,9 +266,27 @@
 (define-key gud-minor-mode-map (kbd "<f4>") 'gud-break)
 (define-key gud-minor-mode-map (kbd "<f7>") 'gud-step)
 
-;; (ido-mode)
-;; (smex-initialize)
-;; (flx-ido-mode)
 
-;; (ido-vertical-mode)
-;; (define-key ido-mode-)
+(require 'evil)
+(require 'evil-collection)
+
+(evil-set-leader 'normal " ")
+
+(evil-define-key 'normal 'global (kbd "<leader>w") 'delete-whitespace-and-save)
+(evil-define-key 'normal 'global (kbd "<leader>g") 'counsel-ag)
+(evil-define-key 'normal 'global (kbd "<leader>s") 'swiper)
+(evil-define-key 'normal 'global (kbd "<leader>e") 'counsel-M-x)
+(evil-define-key 'normal 'global (kbd "<leader>0") 'delete-window)
+(evil-define-key 'normal 'global (kbd "<leader>1") 'delete-other-windows)
+(evil-define-key 'normal 'global (kbd "<leader>2") 'horizontal-split-move)
+(evil-define-key 'normal 'global (kbd "<leader>3") 'vertical-split-move)
+(evil-define-key 'normal 'global (kbd "<leader>d") 'kill-current-buffer)
+(evil-define-key 'normal 'global (kbd "<leader>f") 'counsel-find-file)
+(evil-define-key 'normal 'global (kbd "<leader>o") 'other-window)
+(evil-define-key 'normal 'global (kbd "<leader>q") 'save-buffers-kill-terminal)
+
+(evil-collection-init)
+(evil-mode 1)
+
+(setq-default display-line-numbers-type 'visual)
+(global-display-line-numbers-mode)
