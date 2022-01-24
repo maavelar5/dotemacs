@@ -20,9 +20,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(manoj-dark))
+ '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
-   '("23b564cfb74d784c73167d7de1b9a067bcca00719f81e46d09ee71a12ef7ee82" default))
+   '("0edb121fdd0d3b18d527f64d3e2b57725acb152187eea9826d921736bd6e409e" "6dc02f2784b4a49dd5a0e0fd9910ffd28bb03cfebb127a64f9c575d8e3651440" "57b7a22240508a8eb008a4b29d4c68f91f3b8e9ed60444c50d76d5fa8f9335e9" "23b564cfb74d784c73167d7de1b9a067bcca00719f81e46d09ee71a12ef7ee82" default))
  '(hl-todo-keyword-faces
    '(("HOLD" . "#cfdf30")
      ("TODO" . "#feacd0")
@@ -47,12 +47,12 @@
      (:eval
       (format winum-format
               (winum-get-number-string)))
-     mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position
+     mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position evil-mode-line-tag
      (vc-mode vc-mode)
      "  " "%m  " mode-line-misc-info mode-line-end-spaces))
  '(org-src-block-faces 'nil)
  '(package-selected-packages
-   '(evil-collection evil sexy-monochrome-theme python-black smex ido-vertical-mode w3m company-arduino arduino-mode flycheck-grammarly org-inline-pdf org-preview-html flyspell-correct ivy-posframe which-key emacsql-mysql yaml-mode yaml multi-term ag yasnippet-snippets winum web-mode vterm use-package tide smart-tab slime rainbow-delimiters pug-mode prettier lsp-ui lsp-ivy js2-mode hl-todo highlight-numbers highlight-indentation highlight-indent-guides glsl-mode git-gutter+ fira-code-mode exwm exec-path-from-shell dotenv-mode desktop-environment counsel-projectile company column-enforce-mode color-identifiers-mode clang-format avy-zap))
+   '(modus-themes evil-collection evil sexy-monochrome-theme python-black smex ido-vertical-mode w3m company-arduino arduino-mode flycheck-grammarly org-inline-pdf org-preview-html flyspell-correct ivy-posframe which-key emacsql-mysql yaml-mode yaml multi-term ag yasnippet-snippets winum web-mode vterm use-package tide smart-tab slime rainbow-delimiters pug-mode prettier lsp-ui lsp-ivy js2-mode hl-todo highlight-numbers highlight-indentation highlight-indent-guides glsl-mode git-gutter+ fira-code-mode exwm exec-path-from-shell dotenv-mode desktop-environment counsel-projectile company column-enforce-mode color-identifiers-mode clang-format avy-zap))
  '(safe-local-variable-values
    '((projectile-project-run-cmd . "./lighting_tale.exe")
      (projectile-project-compilation-cmd . "make; ./lighting_tale.exe"))))
@@ -87,6 +87,7 @@
 (use-package clang-format :ensure t)
 (use-package avy-zap :ensure t)
 (use-package evil :ensure t)
+(use-package ivy-posframe :ensure t)
 (use-package evil-collection :ensure t)
 
 (custom-set-faces
@@ -94,8 +95,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 119 :family "Liberation Mono"))))
- '(column-enforce-face ((t (:foreground "gray30"))))
+ '(default ((t (:height 110 :family "Liberation Mono"))))
+ '(column-enforce-face ((t (:inherit nil :foreground "gray30"))))
  '(cursor ((t (:background "green"))))
  '(mode-line ((t (:background "black" :foreground "white" :box (:line-width 1 :color "cyan") :height 1.0))))
  '(mode-line-buffer-id ((t (:background "black" :foreground "yellow1" :weight bold :height 1.0))))
@@ -173,7 +174,6 @@
 (setq-default indent-tabs-mode nil)
 (setq inferior-lisp-program "sbcl")
 
-(load-file "~/secret.el")
 (setq inhibit-startup-screen t)
 
 (yas-global-mode)
@@ -284,8 +284,14 @@
 (evil-define-key 'normal 'global (kbd "<leader>f") 'counsel-find-file)
 (evil-define-key 'normal 'global (kbd "<leader>o") 'other-window)
 (evil-define-key 'normal 'global (kbd "<leader>q") 'save-buffers-kill-terminal)
+(evil-define-key 'normal 'global (kbd "<leader>c") 'projectile-compile-project)
+(evil-define-key 'normal 'global (kbd "<leader>r") 'projectile-run-project)
+(evil-define-key 'normal 'global (kbd "<leader>b") 'counsel-switch-buffer)
+(evil-define-key 'normal 'global (kbd "<leader>F") 'counsel-projectile-find-file)
+(evil-define-key 'normal 'global (kbd "<leader>i") 'counsel-imenu)
 
 (evil-collection-init)
+
 (evil-mode 1)
 
 (setq-default display-line-numbers-type 'visual)

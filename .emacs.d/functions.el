@@ -72,11 +72,11 @@
   (interactive)
   (when dev-fancy
       (hl-todo-mode t)
-      (highlight-numbers-mode t)
-      (rainbow-delimiters-mode t)
-      (color-identifiers-mode t)
-      (if (window-system)
-          (fira-code-mode)))
+      (highlight-numbers-mode t))
+      ;;(rainbow-delimiters-mode t)
+      ;;(color-identifiers-mode t)
+      ;;(if (window-system)
+          ;;(fira-code-mode)))
 
   (when dev-column
     (column-enforce-mode))
@@ -96,8 +96,8 @@
       (ggtags-mode t)))
 
   (setq show-trailing-whitespace t)
-  (setq indent-tabs-mode nil)
-  (git-gutter+-mode))
+  (setq indent-tabs-mode nil))
+  ;;(git-gutter+-mode))
 
 (defun v-split-move ()
   "Needed a mid shit."
