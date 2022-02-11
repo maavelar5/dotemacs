@@ -47,14 +47,10 @@
   (progn
     (when (and (locate-dominating-file "." ".clang-format") (or (equal major-mode 'c++-mode) (equal major-mode 'c-mode) (equal major-mode 'glsl-mode)))
       (clang-format-buffer))
-    (when (or (equal major-mode 'web-mode) (equal major-mode 'js-mode))
-      (setq current-point (point))
-      (mark-whole-buffer)
-      (indent-region (region-beginning) (region-end))
-      (delete-trailing-whitespace)
-      (goto-char current-point)))
-    (when t
-      (delete-trailing-whitespace))
+    (when (equal major-mode 'web-mode)
+      (prettier-prettify))
+    (when (equal major-mode 'python-mode)
+      (python-black-buffer)))
     (save-buffer))
 
 (defun indent-file ()
@@ -73,10 +69,10 @@
   (when dev-fancy
       (hl-todo-mode t)
       (highlight-numbers-mode t))
-      ;;(rainbow-delimiters-mode t)
-      ;;(color-identifiers-mode t)
-      ;;(if (window-system)
-          ;;(fira-code-mode)))
+      ;; (rainbow-delimiters-mode t))
+      ;; (color-identifiers-mode t))
+      ;; (if (window-system)
+          ;; (fira-code-mode)))
 
   (when dev-column
     (column-enforce-mode))
@@ -97,7 +93,6 @@
 
   (setq show-trailing-whitespace t)
   (setq indent-tabs-mode nil))
-  ;;(git-gutter+-mode))
 
 (defun v-split-move ()
   "Needed a mid shit."
@@ -502,6 +497,33 @@
   (interactive)
   (shell-command "xset r rate 200 60")
   (shell-command "setxkbmap -option caps:super"))
+
+(defun vertical-split-move()
+  (interactive)
+  (split-window-right)
+  (other-window 1))
+
+(defun horizontal-split-move()
+  (interactive)
+  (split-window-below)
+  (other-window 1))
+
+(defun term-split ()
+  (interactive)
+  (vertical-split-move)
+  (multi-term))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
 
 (provide 'functions)
 ;;; functions.el ends here
