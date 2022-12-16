@@ -1,0 +1,18 @@
+URxvt.font:     xft:liberation mono:size=12:antialias=true
+URxvt.boldFont: xft:liberation mono:bold:size=12:antialias=true
+
+URxvt.background: #000000
+URxvt.foreground: #ffffff
+URxvt.scrollBar: false
+URxvt.letterSpace: -1
+
+Zutty.title:                   The Big Zutty
+Zutty.geometry:                120x45
+Zutty.altScroll:               true
+Zutty.boldColors:              false
+Zutty.font:                    LiberationMono
+Zutty.fontsize:                15
+Zutty.fontpath:                /usr/share/fonts
+Zutty.fg:                      #000
+Zutty.bg:                      #add8e6
+Zutty.cr:                      #f00

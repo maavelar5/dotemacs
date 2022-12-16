@@ -12,23 +12,8 @@ makepkg -fsri
 cd ..
 rm -rf pikaur
 
-sudo pacman -S xorg xorg-xinit emacs autorandr vim pulseaudio pulseaudio-bluetooth pulsemixer scrot xfce4-terminal the_silver_searcher ttf-liberation
+sudo pacman -S xorg xorg-xinit emacs autorandr vim pulseaudio pulseaudio-bluetooth pulsemixer scrot zutty the_silver_searcher ttf-liberation awesome gimp networkmanager rofi discord gcc gdb sdl2 sdl2_image sdl2_ttf sdl2_mixer sdl2_net pkg-config mpv
 
 pikaur -S brave-bin
-
-git clone https://git.suckless.org/dwm
-
-cd dwm
-git checkout 6.3
-git apply ../../dwm/systray.diff
-cp ../../dwm/config.h config.h 
-make clean; make; sudo make install;
-cd ..
-
-git clone https://git.suckless.org/slstatus
-cd slstatus
-cp ../../slstatus/config.h config.h
-make clean; make; sudo make install;
-cd ../../
 
 ./autologin.sh

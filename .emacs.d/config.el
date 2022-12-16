@@ -14,7 +14,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode 1)
-(display-time-mode 1)
 (display-battery-mode 1)
 
 ;; Server
@@ -40,8 +39,8 @@
 (global-hl-line-mode 1)
 (set-face-foreground 'hl-line nil)
 
-(autorandr)
-(winum-mode)
+;; (autorandr)
+;; (winum-mode)
 
 (setq ring-bell-function nil)
 (setq avy-all-windows 'nil)
@@ -115,4 +114,10 @@
 (define-key gud-minor-mode-map (kbd "<f5>") 'gud-run)
 (define-key gud-minor-mode-map (kbd "<f6>") 'gud-cont)
 (define-key gud-minor-mode-map (kbd "<f4>") 'gud-break)
-(define-key gud-minor-mode-map (kbd "<f7>") 'gud-step)
+(define-key gud-minor-mode-map (kbd "<f7>") 'gud-next)
+
+(delete-selection-mode 1)
+
+(setq highlight-indent-guides-method 'bitmap)
+
+(mood-line-mode t)

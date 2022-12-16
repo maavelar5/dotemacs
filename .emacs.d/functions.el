@@ -51,7 +51,12 @@
       (prettier-prettify))
     (when (equal major-mode 'python-mode)
       (python-black-buffer)))
-    (save-buffer))
+  (save-buffer)
+  (when (and (equal major-mode 'c++-mode))
+    (if gud-minor-mode
+        (start-process-shell-command "compilation" nil "make")
+      ))
+  )
 
 (defun indent-file ()
   "Indent file. "
@@ -68,8 +73,9 @@
   (interactive)
   (when dev-fancy
       (hl-todo-mode t)
-      (highlight-numbers-mode t))
-      ;; (rainbow-delimiters-mode t))
+      (highlight-numbers-mode t)
+      (highlight-indent-guides-mode))
+      ;; (rainbow-delimiters-mode t)
       ;; (color-identifiers-mode t))
       ;; (if (window-system)
           ;; (fira-code-mode)))
@@ -524,6 +530,21 @@
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
   (company-mode +1))
+
+(defun no-prompt-run (&optional prompt)
+  (interactive "P")
+  (let ((compilation-read-command
+         (or (not (projectile-run-command (projectile-compilation-dir)))
+             prompt)))
+    (projectile-run-project prompt)))
+
+(defun no-prompt-compile (&optional prompt)
+  (interactive "P")
+  (let ((compilation-read-command
+         (or (not (projectile-compilation-command (projectile-compilation-dir)))
+             prompt)))
+    (projectile-compile-project prompt)))
+
 
 (provide 'functions)
 ;;; functions.el ends here
