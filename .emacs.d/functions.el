@@ -74,9 +74,9 @@
   (when dev-fancy
       (hl-todo-mode t)
       (highlight-numbers-mode t)
-      (highlight-indent-guides-mode))
-      ;; (rainbow-delimiters-mode t)
-      ;; (color-identifiers-mode t))
+      (highlight-indent-guides-mode)
+      (rainbow-delimiters-mode t)
+      (color-identifiers-mode t))
       ;; (if (window-system)
           ;; (fira-code-mode)))
 

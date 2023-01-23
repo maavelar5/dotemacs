@@ -20,7 +20,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(light-blue)))
+ '(custom-enabled-themes '(manoj-dark)))
 
 ;; (use-package exwm :ensure t)
 
@@ -30,7 +30,6 @@
 (use-package company                 :ensure t)
 (use-package counsel-projectile      :ensure t)
 (use-package desktop-environment     :ensure t)
-(use-package dirvish                 :ensure t)
 (use-package dotenv-mode             :ensure t)
 (use-package evil-collection         :ensure t)
 (use-package exec-path-from-shell    :ensure t)
@@ -46,20 +45,37 @@
 (use-package mood-line               :ensure t)
 (use-package pdf-tools               :ensure t)
 (use-package pug-mode                :ensure t)
-(use-package slime                   :ensure t)
 (use-package smart-tab               :ensure t)
 (use-package tide                    :ensure t)
 (use-package use-package             :ensure t)
 (use-package web-mode                :ensure t)
 (use-package winum                   :ensure t)
 (use-package yasnippet-snippets      :ensure t)
+(use-package rainbow-delimiters      :ensure t)
+(use-package rainbow-identifiers     :ensure t)
+(use-package color-identifiers-mode  :ensure t)
+(use-package fancy-battery      :ensure t)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:height 120 :foundry "1ASC" :family "Liberation Mono"))))
+ '(column-enforce-face ((t (:foreground "gray20" :underline t))))
+ '(mode-line ((t (:background "black" :foreground "white" :box (:line-width (1 . 1) :color "cyan") :height 0.9))))
+ '(mode-line-buffer-id ((t (:weight bold :height 0.9))))
+ '(mode-line-inactive ((t (:background "black" :foreground "dim gray" :box (:line-width (1 . 1) :color "white" :style released-button) :weight light :height 0.9))))
+ '(mood-line-buffer-name ((t (:foreground "green"))))
+ '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "green"))))
+ '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "violet red"))))
+ '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep sky blue"))))
+ '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow"))))
+ '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "medium slate blue"))))
+ '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
+ '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "orange red"))))
+ '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark violet"))))
+ '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "medium blue")))))
 
 (load-file "~/.emacs.d/functions.el")
 (load-file "~/.emacs.d/config.el")

@@ -13,6 +13,7 @@ Zutty.boldColors:              false
 Zutty.font:                    LiberationMono
 Zutty.fontsize:                15
 Zutty.fontpath:                /usr/share/fonts
-Zutty.fg:                      #000
-Zutty.bg:                      #add8e6
-Zutty.cr:                      #f00
+
+Zutty.fg:                      #fff
+Zutty.bg:                      #000
+Zutty.cr:                      #0f0

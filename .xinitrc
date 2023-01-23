@@ -21,6 +21,8 @@ export EDITOR="$VISUAL"
 slstatus &
 autorandr -c
 
+xrdb -merge ~/.Xresources
+
 sudo ntpd -qg &
 
 setxkbmap -option caps:super
@@ -28,4 +30,6 @@ setxkbmap -option caps:super
 # Start Emacs
 # exec emacs
 #exec stumpwm
-exec dwm
+#exec dwm
+exec awesome
+#exec startxfce4

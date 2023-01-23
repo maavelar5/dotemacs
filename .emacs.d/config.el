@@ -14,7 +14,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode 1)
-(display-battery-mode 1)
+;; (display-battery-mode 1)
 
 ;; Server
 (server-start)
@@ -74,7 +74,7 @@
 (setq lsp-ui-doc-enable nil)
 (setq lsp-completion-enable-additional-text-edit nil)
 
-(setq lsp-ui-sideline-show-diagnostics nil)
+;; (setq lsp-ui-sideline-show-diagnostics nil)
 ;; (setq lsp-ui-sideline-enable nil)
 
 (setq web-mode-enable-current-element-highlight t)
@@ -121,3 +121,5 @@
 (setq highlight-indent-guides-method 'bitmap)
 
 (mood-line-mode t)
+
+(fancy-battery-mode t)
