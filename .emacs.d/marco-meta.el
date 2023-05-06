@@ -11,6 +11,7 @@
 (define-key spc-map (kbd "M-4") 'other-window)
 
 (define-key spc-map (kbd "M-o") 'counsel-find-file)
+(define-key spc-map (kbd "M-O") 'counsel-projectile-find-file)
 (define-key spc-map (kbd "M-s") 'delete-whitespace-and-save)
 (define-key spc-map (kbd "M-p") 'counsel-switch-buffer)
 
@@ -35,7 +36,8 @@
 
 (define-key spc-map (kbd "M-h") 'lsp-goto-type-definition)
 
-(define-key spc-map (kbd "<escape>") 'keyboard-quit)
+(global-set-key (kbd "<escape>") 'keyboard-quit)
+(define-key ivy-minibuffer-map (kbd "<escape>") 'keyboard-escape-quit)
 
 (define-minor-mode marco-meta-mode
   "marco-meta-mode is a minor mode for doing modal editing."

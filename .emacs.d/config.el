@@ -123,3 +123,10 @@
 (mood-line-mode t)
 
 (fancy-battery-mode t)
+
+(add-hook 'before-save-hook #'gofmt-before-save)
+
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
+(setq-default tab-width 4)
+(setq-default c-basic-offset 4)

@@ -51,7 +51,7 @@ beautiful.init("~/.config/awesome/default/theme.lua")
 
 
 -- This is used later as the default terminal and editor to run.
-terminal = "zutty"
+terminal = "lxterminal"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 

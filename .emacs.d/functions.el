@@ -64,7 +64,7 @@
   (indent-region (point-min) (point-max) nil))
 
 (setq dev-lsp t)
-(setq dev-fancy t)
+(setq dev-fancy nil)
 (setq dev-ggtags nil)
 (setq dev-column t)
 
@@ -387,13 +387,13 @@
 
 (add-to-list 'auto-mode-alist '("\\.handlebars\\'" . web-mode))
 
+(add-hook 'go-mode-hook 'development-mode)
 (add-hook 'c-mode-hook 'development-mode)
 (add-hook 'c++-mode-hook 'development-mode)
 (add-hook 'emacs-lisp-mode-hook 'development-mode)
 (add-hook 'javascript-mode-hook 'development-mode)
 (add-hook 'js-mode-hook 'development-mode)
 (add-hook 'web-mode-hook 'development-mode)
-(add-hook 'fundamental-mode 'development-mode)
 
 (setq dmenu-cfg " | dmenu -i -l 20 -p .")
 

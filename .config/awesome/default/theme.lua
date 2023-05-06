@@ -14,21 +14,34 @@ local theme = {}
 
 theme.font          = "sans 10"
 
-theme.bg_normal     = "#555555"
-theme.bg_focus      = "#add8e6"
+--light blue
+-- theme.bg_normal     = "#555555"
+-- theme.bg_focus      = "#add8e6"
+-- theme.bg_urgent     = "#ff0000"
+-- theme.bg_minimize   = "#66cdaa"
+
+theme.bg_normal     = "#000000"
+theme.bg_focus      = "#000000"
 theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#66cdaa"
+theme.bg_minimize   = "#000000"
+
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#ffffff"
-theme.fg_focus      = "#000000"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+--light blue
+-- theme.fg_normal     = "#ffffff"
+-- theme.fg_focus      = "#000000"
+-- theme.fg_urgent     = "#ffffff"
+-- theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(4)
+theme.fg_normal     = "#ffffff"
+theme.fg_focus      = "#ff8800"
+theme.fg_urgent     = "#000000"
+theme.fg_minimize   = "#0044ff"
+
+theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(2)
 
-theme.border_focus = "#ff5500"
+theme.border_focus = "#ff8800"
 theme.border_normal = "#444444"
 
 theme.border_marked = "#91231c"
@@ -46,14 +59,16 @@ theme.border_marked = "#91231c"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
-theme.tasklist_bg_normal = "#555555"
-theme.tasklist_fg_normal = "#aaaaaa"
+theme.hotkeys_modifiers_fg = "#ff8800"
 
-theme.tasklist_fg_focus = "#000000"
-theme.tasklist_bg_focus = "#add8e6"
+theme.tasklist_bg_normal = "#000000"
+theme.tasklist_fg_normal = "#ffffff"
+
+theme.tasklist_bg_focus = "#000000"
+theme.tasklist_fg_focus = "#ff8800"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(5)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_focus
 )
@@ -106,7 +121,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."default/wallpaper.jpg"
+theme.wallpaper = themes_path.."default/wallpaper2.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
