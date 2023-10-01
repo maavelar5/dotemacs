@@ -63,7 +63,7 @@
   (interactive)
   (indent-region (point-min) (point-max) nil))
 
-(setq dev-lsp t)
+(setq dev-eglot t)
 (setq dev-fancy nil)
 (setq dev-ggtags nil)
 (setq dev-column t)
@@ -89,16 +89,14 @@
   (smart-tab-mode t)
   (projectile-mode)
 
-  (when dev-lsp
-    (when (equal major-mode 'c++-mode)
-      (lsp t)))
-
   (when dev-ggtags
     (when (equal major-mode 'c++-mode)
       (ggtags-mode t)))
 
   (setq show-trailing-whitespace t)
   (setq indent-tabs-mode nil))
+
+(when dev-eglot (add-hook 'c++-mode-hook 'eglot-ensure))
 
 (defun v-split-move ()
   "Needed a mid shit."

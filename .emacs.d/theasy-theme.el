@@ -49,6 +49,7 @@
  '(query-replace ((t (:foreground "brown4" :background "palevioletred2"))))
  '(compilation-error ((t (:foreground "red" :weight bold))))
  '(eshell-prompt ((t (:foreground "green" :weight bold))))
- '(default ((t (:family "Liberation Mono" :foundry "1ASC" :width normal :height 110 :weight normal :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "WhiteSmoke" :background "black" :stipple nil :inherit nil)))))
+ '(default ((t (:family "Liberation Mono" :foundry "1ASC" :width normal :height 110 :weight normal :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "WhiteSmoke" :background "black" :stipple nil :inherit nil))))
+ '(column-enforce-face ((t (:foreground "dim gray")))))
 
 (provide-theme 'theasy)

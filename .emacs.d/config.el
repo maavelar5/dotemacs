@@ -1,13 +1,43 @@
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
+(defun marco-ivy ()
+  "Enable ivy"
+  (interactive)
+  (ivy-mode 1)
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+  (ivy-posframe-mode 1)
 
-(setq ivy-re-builders-alist
-      '((swiper-isearch . ivy--regex-plus)
-        (swiper-isearch-backward . ivy--regex-plus)
-        (t . ivy--regex-plus)))
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
 
-;; (setq ivy-initial-inputs-alist nil)
+  ;; (setq ivy-initial-inputs-alist nil)
+
+  (setq ivy-re-builders-alist
+        '((swiper-isearch . ivy--regex-plus)
+          (swiper-isearch-backward . ivy--regex-plus)
+          (t . ivy--regex-plus))))
+
+(defun marco-icomplete ()
+  "Enable icomplete"
+  (interactive)
+  (icomplete-mode)
+  (icomplete-vertical-mode))
+
+(defun marco-fido ()
+  "Enable icomplete"
+  (interactive)
+  (fido-vertical-mode))
+
+(defun marco-ido ()
+  "Enable icomplete"
+  (interactive)
+  (ido-vertical-mode))
+
+(defun marco-completion-system-enable ()
+  (interactive)
+  (cond
+   ((eql marco-completion-system 'marco-ivy) (marco-ivy))
+   ((eql marco-completion-system 'marco-icomplete) (marco-icomplete))
+   ((eql marco-completion-system 'marco-fido) (marco-fido))
+   ((eql marco-completion-system 'marco-ido) (marco-ido))))
 
 ;; ui settings
 (menu-bar-mode -1)
@@ -105,10 +135,6 @@
 
 ;; enable typescript - tslint checker
 (flycheck-add-mode 'typescript-tslint 'web-mode)
-
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
-
-(ivy-posframe-mode 1)
 
 (require 'gud)
 (define-key gud-minor-mode-map (kbd "<f5>") 'gud-run)
