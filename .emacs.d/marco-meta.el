@@ -15,7 +15,7 @@
 (define-key spc-map (kbd "M-s") 'delete-whitespace-and-save)
 (define-key spc-map (kbd "M-p") 'switch-to-buffer)
 
-(define-key spc-map (kbd "M-i") 'imenu)
+(define-key spc-map (kbd "M-i") 'idomenu)
 (define-key spc-map (kbd "M-k") 'kill-current-buffer)
 
 (define-key spc-map (kbd "M-c") 'projectile-compile-project)
@@ -32,12 +32,12 @@
 (define-key spc-map (kbd "M-[") 'previous-error)
 (define-key spc-map (kbd "C-z") 'do-it-right)
 
-(define-key spc-map (kbd "M-e") 'execute-extended-command)
+(define-key spc-map (kbd "M-e") 'smex)
 (define-key spc-map (kbd "C-S-SPC") 'rectangle-mark-mode)
 
-(define-key spc-map (kbd "M-h") 'lsp-goto-type-definition)
-
 (global-set-key (kbd "<escape>") 'keyboard-quit)
+
+(define-key spc-map (kbd "M-h") 'grep-for-media-server)
 
 (define-minor-mode marco-meta-mode
   "marco-meta-mode is a minor mode for doing modal editing."
@@ -54,6 +54,6 @@
       (setq cursor-type 'box)
     (setq cursor-type 'bar)))
 
-(setq marco-completion-system 'marco-fido)
+(setq marco-completion-system 'marco-ido-vertical)
 
 (provide 'marco-meta-mode)

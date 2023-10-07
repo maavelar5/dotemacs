@@ -29,6 +29,12 @@
 (defun marco-ido ()
   "Enable icomplete"
   (interactive)
+  (ido-mode))
+
+(defun marco-ido-vertical ()
+  "Enable icomplete"
+  (interactive)
+  (ido-mode)
   (ido-vertical-mode))
 
 (defun marco-completion-system-enable ()
@@ -37,7 +43,8 @@
    ((eql marco-completion-system 'marco-ivy) (marco-ivy))
    ((eql marco-completion-system 'marco-icomplete) (marco-icomplete))
    ((eql marco-completion-system 'marco-fido) (marco-fido))
-   ((eql marco-completion-system 'marco-ido) (marco-ido))))
+   ((eql marco-completion-system 'marco-ido) (marco-ido))
+   ((eql marco-completion-system 'marco-ido-vertical) (marco-ido-vertical))))
 
 ;; ui settings
 (menu-bar-mode -1)
@@ -63,7 +70,7 @@
 ;; disable auto-save and auto-backup
 (setq auto-save-default nil)
 (setq make-backup-files nil)
-(setq ring-bell-function nil)
+(setq ring-bell-function 'ignore)
 
 ;; Hihglighting current line
 (global-hl-line-mode 1)

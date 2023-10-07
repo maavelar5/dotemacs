@@ -70,12 +70,14 @@
 (use-package dotenv-mode             :ensure t)
 
 ;; narrow framework
-(use-package icomplete-vertical :ensure t)
+(use-package idomenu 			:ensure t)
+(use-package ido-vertical-mode 		:ensure t)
 ;; (use-package ivy                     :ensure t)
 ;; (use-package counsel                 :ensure t)
-;; (use-package ivy-posframe            :ensure t)
 ;; (use-package lsp-ivy                 :ensure t)
+;; (use-package ivy-posframe            :ensure t)
 ;; (use-package counsel-projectile      :ensure t)
+;; (use-package icomplete-vertical :ensure t)
 
 ;; misc
 (use-package use-package             :ensure t)
@@ -90,7 +92,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:height 104 :family "Liberation Mono")))))
 
 (load-file "~/.emacs.d/functions.el")
 (load-file "~/.emacs.d/config.el")
@@ -103,4 +105,19 @@
  ((eql config 'marco-weird) (load-file "~/.emacs.d/marco-weird.el"))
  ((eql config 'marco-vanilla) (load-file "~/.emacs.d/marco-vanilla.el")))
 
+
 (marco-completion-system-enable)
+
+(setq tramp-default-method "ssh")
+(setq ring-bell-function 'ignore)
+
+(setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
+
+(setq tramp-verbose 0)
+(setq remote-file-name-inhibit-locks t)
+
+(require 'tramp)
+(add-to-list 'tramp-remote-path "/opt/rh/llvm-toolset-7/root/usr/bin")
