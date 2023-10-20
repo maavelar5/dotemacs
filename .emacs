@@ -71,6 +71,7 @@
 (use-package dotenv-mode             :ensure t)
 
 ;; narrow framework
+(use-package smex :ensure t)
 (use-package idomenu 			:ensure t)
 (use-package ido-vertical-mode 		:ensure t)
 (use-package ivy                     :ensure t)
