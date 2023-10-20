@@ -39,5 +39,7 @@
 
 (evil-mode 1)
 
+(setq marco-completion-system 'marco-ido-vertical)
+
 (provide 'marco-mode)
 ;;; marco-mode.el ends here

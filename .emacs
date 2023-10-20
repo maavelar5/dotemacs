@@ -34,7 +34,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(theasy)))
+ '(custom-enabled-themes '(theasy))
+ '(ido-vertical-define-keys 'C-n-and-C-p-only))
 
 ;; editing
 (use-package ctrlf                   :ensure t)
@@ -72,11 +73,11 @@
 ;; narrow framework
 (use-package idomenu 			:ensure t)
 (use-package ido-vertical-mode 		:ensure t)
-;; (use-package ivy                     :ensure t)
-;; (use-package counsel                 :ensure t)
+(use-package ivy                     :ensure t)
+(use-package counsel                 :ensure t)
 ;; (use-package lsp-ivy                 :ensure t)
 ;; (use-package ivy-posframe            :ensure t)
-;; (use-package counsel-projectile      :ensure t)
+(use-package counsel-projectile      :ensure t)
 ;; (use-package icomplete-vertical :ensure t)
 
 ;; misc
@@ -85,7 +86,7 @@
 (use-package exec-path-from-shell    :ensure t)
 ;; (use-package exwm                    :ensure nil)
 ;; (use-package pdf-tools               :ensure t)
-;; (use-package evil-collection         :ensure t)
+(use-package evil-collection         :ensure t)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
