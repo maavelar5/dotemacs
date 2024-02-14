@@ -1,0 +1,48 @@
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+
+(require 'package)
+
+(package-initialize)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(wheatgrass)))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; UI
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(fringe-mode 1)
+
+;; Modes
+(icomplete-mode)
+(icomplete-vertical-mode)
+
+;; Keybinds
+(keymap-global-set "M-o" 'find-file)
+(keymap-global-set "M-e" 'execute-extended-command)
+(keymap-global-set "M-s" 'save-buffer)
+(keymap-global-set "M-k" 'kill-current-buffer)
+(keymap-global-set "M-i" 'imenu)
+
+(keymap-global-set "C-;" 'comment-line)
+(keymap-global-set "M-p" 'switch-to-buffer)
+
+(keymap-global-set "M-1" 'delete-other-windows)
+(keymap-global-set "M-2" 'split-window-vertically)
+(keymap-global-set "M-3" 'split-window-horizontally)
+(keymap-global-set "M-4" 'other-window)
+(keymap-global-set "M-0" 'delete-window)
