@@ -37,6 +37,9 @@
 (keymap-global-set "M-s" 'save-buffer)
 (keymap-global-set "M-k" 'kill-current-buffer)
 (keymap-global-set "M-i" 'imenu)
+(keymap-global-set "M-\]" 'next-error)
+(keymap-global-set "M-\[" 'previous-error)
+(keymap-global-set "M-\\" 'xref-find-references)
 
 (keymap-global-set "C-;" 'comment-line)
 (keymap-global-set "M-p" 'switch-to-buffer)
@@ -46,3 +49,41 @@
 (keymap-global-set "M-3" 'split-window-horizontally)
 (keymap-global-set "M-4" 'other-window)
 (keymap-global-set "M-0" 'delete-window)
+
+(defun marco-grep (pattern)
+  (interactive "sPattern: ")
+  (setq cmd (format "grep -rn . -ie \'%s\'" pattern))
+  (lgrep cmd))
+
+(keymap-global-set "M-t" 'marco-grep)
+
+(setq inhibit-startup-screen t)
+
+(setq-default tab-width 4)
+(setq-default c-basic-offset 4)
+(setq-default indent-tabs-mode nil)
+
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq ring-bell-function 'ignore)
+
+(defun remote-docker-container (user ip container path)
+  "Connect to remote docker container"
+  (setq cmd (format "/ssh:%s@%s|docker:%s:%s" user ip container path))
+  (find-file cmd))
+
+(defun sandbox ()
+  "Run sandbox tfs."
+  (interactive)
+  (remote-docker-container "user" "ip" "container" "path"))
+
+(defun tfs ()
+  "Run tfs."
+  (interactive)
+  (remote-docker-container "user" "ip" "container" "path"))
+
+
+(defun ms ()
+  "Run ms."
+  (interactive)
+  (remote-docker-container "user" "ip" "container" "path"))
