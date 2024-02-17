@@ -6,6 +6,14 @@
 (require 'package)
 
 (package-initialize)
+(package-refresh-contents)
+
+(defun install-if-not (package)
+  (when (not (package-installed-p package))
+    (package-install package)))
+
+(install-if-not 'company)
+(install-if-not 'yaml-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -22,14 +30,33 @@
  )
 
 ;; UI
+(fringe-mode 1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(fringe-mode 1)
+(setq inhibit-startup-screen t)
+
+(setq-default tab-width 4)
+(setq-default c-basic-offset 4)
+(setq-default indent-tabs-mode nil)
+
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq ring-bell-function 'ignore)
 
 ;; Modes
-(icomplete-mode)
-(icomplete-vertical-mode)
+(fido-mode)
+(fido-vertical-mode)
+
+(defun dev-modes ()
+  (interactive)
+  (electric-pair-mode)
+  (hs-minor-mode)
+  (company-mode))
+
+(add-hook 'c++-mode-hook 'dev-modes)
+(add-hook 'c-mode-hook 'dev-modes)
+(add-hook 'emacs-lisp-mode-hook 'dev-modes)
 
 ;; Keybinds
 (keymap-global-set "M-o" 'find-file)
@@ -39,7 +66,7 @@
 (keymap-global-set "M-i" 'imenu)
 (keymap-global-set "M-\]" 'next-error)
 (keymap-global-set "M-\[" 'previous-error)
-(keymap-global-set "M-\\" 'xref-find-references)
+(keymap-global-set "M-/" 'xref-find-references)
 
 (keymap-global-set "C-;" 'comment-line)
 (keymap-global-set "M-p" 'switch-to-buffer)
@@ -56,16 +83,6 @@
   (lgrep cmd))
 
 (keymap-global-set "M-t" 'marco-grep)
-
-(setq inhibit-startup-screen t)
-
-(setq-default tab-width 4)
-(setq-default c-basic-offset 4)
-(setq-default indent-tabs-mode nil)
-
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-(setq ring-bell-function 'ignore)
 
 (defun remote-docker-container (user ip container path)
   "Connect to remote docker container"
