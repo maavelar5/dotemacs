@@ -5,29 +5,34 @@
 
 (require 'package)
 
-(package-initialize)
-(package-refresh-contents)
-
 (defun install-if-not (package)
   (when (not (package-installed-p package))
     (package-install package)))
 
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+(package-initialize)
+(package-refresh-contents)
+
 (install-if-not 'company)
 (install-if-not 'yaml-mode)
+(install-if-not 'smart-tab)
+(install-if-not 'projectile)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(wheatgrass)))
+ '(custom-enabled-themes '(wheatgrass))
+ '(package-selected-packages '(smart-tab yaml-mode company)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:height 120 :family "Liberation Mono")))))
 
 ;; UI
 (fringe-mode 1)
@@ -52,37 +57,15 @@
   (interactive)
   (electric-pair-mode)
   (hs-minor-mode)
-  (company-mode))
-
-(add-hook 'c++-mode-hook 'dev-modes)
-(add-hook 'c-mode-hook 'dev-modes)
-(add-hook 'emacs-lisp-mode-hook 'dev-modes)
-
-;; Keybinds
-(keymap-global-set "M-o" 'find-file)
-(keymap-global-set "M-e" 'execute-extended-command)
-(keymap-global-set "M-s" 'save-buffer)
-(keymap-global-set "M-k" 'kill-current-buffer)
-(keymap-global-set "M-i" 'imenu)
-(keymap-global-set "M-\]" 'next-error)
-(keymap-global-set "M-\[" 'previous-error)
-(keymap-global-set "M-/" 'xref-find-references)
-
-(keymap-global-set "C-;" 'comment-line)
-(keymap-global-set "M-p" 'switch-to-buffer)
-
-(keymap-global-set "M-1" 'delete-other-windows)
-(keymap-global-set "M-2" 'split-window-vertically)
-(keymap-global-set "M-3" 'split-window-horizontally)
-(keymap-global-set "M-4" 'other-window)
-(keymap-global-set "M-0" 'delete-window)
+  (company-mode)
+  (smart-tab-mode)
+  (projectile-mode)
+  (setq show-trailing-whitespace t))
 
 (defun marco-grep (pattern)
   (interactive "sPattern: ")
   (setq cmd (format "grep -rn . -ie \'%s\'" pattern))
   (lgrep cmd))
-
-(keymap-global-set "M-t" 'marco-grep)
 
 (defun remote-docker-container (user ip container path)
   "Connect to remote docker container"
@@ -104,3 +87,56 @@
   "Run ms."
   (interactive)
   (remote-docker-container "user" "ip" "container" "path"))
+
+(add-hook 'c++-mode-hook 'dev-modes)
+(add-hook 'c-mode-hook 'dev-modes)
+(add-hook 'emacs-lisp-mode-hook 'dev-modes)
+
+(defvar marco-keymap (make-sparse-keymap)
+  "Keymap for true global bindings.")
+
+(defun set-keybind (key func)
+  (define-key marco-keymap (kbd key) func))
+
+(set-keybind "C-s" 'isearch-forward-regexp)
+(set-keybind "C-r" 'isearch-backward-regexp)
+(set-keybind "C-;" 'comment-line)
+(set-keybind "C-t" 'marco-grep)
+
+(set-keybind "M-/" 'xref-find-references)
+(set-keybind "M-]" 'next-error)
+(set-keybind "M-[" 'previous-error)
+(set-keybind "M-e" 'execute-extended-command)
+(set-keybind "M-h" 'hs-toggle-hiding)
+
+(set-keybind "M-1" 'delete-other-windows)
+(set-keybind "M-2" 'split-window-vertically)
+(set-keybind "M-3" 'split-window-horizontally)
+(set-keybind "M-4" 'other-window)
+(set-keybind "M-0" 'delete-window)
+
+(set-keybind "M-o" 'find-file)
+(set-keybind "M-O" 'projectile-find-file)
+(set-keybind "M-s" 'save-buffer)
+(set-keybind "M-p" 'switch-to-buffer)
+
+(set-keybind "M-i" 'imenu)
+(set-keybind "M-k" 'kill-current-buffer)
+
+(set-keybind "M-c" 'projectile-compile-project)
+(set-keybind "M-r" 'projectile-run-project)
+
+(define-minor-mode marco-meta-mode
+  "marco-meta-mode is a minor mode for doing modal editing."
+  ;; initial value
+  :init-value t
+  :global nil
+  ;; indicator for mode line
+  :lighter " mgk "
+  :group 'marco-meta-group
+
+  :keymap marco-keymap
+
+  (if marco-meta-mode
+      (setq cursor-type 'box)
+    (setq cursor-type 'bar)))
