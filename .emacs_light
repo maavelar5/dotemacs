@@ -24,8 +24,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(wheatgrass))
- '(package-selected-packages '(smart-tab yaml-mode company)))
+ '(custom-enabled-themes '(leuven-dark)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -60,6 +59,7 @@
   (company-mode)
   (smart-tab-mode)
   (projectile-mode)
+  (hl-line-mode)
   (setq show-trailing-whitespace t))
 
 (defun marco-grep (pattern)
@@ -91,6 +91,7 @@
 (add-hook 'c++-mode-hook 'dev-modes)
 (add-hook 'c-mode-hook 'dev-modes)
 (add-hook 'emacs-lisp-mode-hook 'dev-modes)
+(add-hook 'java-mode-hook 'dev-modes)
 
 (defvar marco-keymap (make-sparse-keymap)
   "Keymap for true global bindings.")
