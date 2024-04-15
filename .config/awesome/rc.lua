@@ -51,7 +51,7 @@ beautiful.init("~/.config/awesome/default/theme.lua")
 
 
 -- This is used later as the default terminal and editor to run.
-terminal = "lxterminal"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -327,7 +327,25 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() awful.spawn("rofi -show drun") end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+
+    -- i3lock
+    awful.key({ modkey }, "\\", function() awful.spawn("i3lock -i /home/marco/.config/awesome/default/wallpaper5.png -t") end,
+              {description = "lock the screem babyyy", group = "locking"}),
+
+    -- volume control
+    awful.key({  }, "XF86AudioRaiseVolume", function() awful.spawn("pulsemixer --change-volume 10") end,
+              {description = "volume raise", group = "volume"}),
+
+    awful.key({  }, "XF86AudioLowerVolume", function() awful.spawn("pulsemixer --change-volume -10") end,
+       {description = "volume lower", group = "volume"}),
+
+    awful.key({  }, "XF86AudioMute", function() awful.spawn("pulsemixer --toggle-mute") end,
+       {description = "toggle mute", group = "volume"}),
+
+    awful.key({  }, "F12", function() awful.spawn("autorandr -c") end,
+              {description = "displays", group = "update"})
+
 )
 
 clientkeys = gears.table.join(
@@ -587,3 +605,9 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+awful.util.spawn("/home/marco/kb.sh")
+awful.util.spawn("autorandr -c")
+
+awful.util.spawn("nm-applet")
+awful.util.spawn("pasystray")
+awful.util.spawn("cbatticon")

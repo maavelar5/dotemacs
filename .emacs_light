@@ -14,18 +14,21 @@
 (package-initialize)
 (package-refresh-contents)
 
-(install-if-not 'company)
-(install-if-not 'yaml-mode)
-(install-if-not 'smart-tab)
-(install-if-not 'projectile)
 (install-if-not 'atomic-chrome)
+(install-if-not 'counsel)
+(install-if-not 'company)
+(install-if-not 'ivy)
+(install-if-not 'projectile)
+(install-if-not 'smart-tab)
+(install-if-not 'yaml-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(modus-vivendi)))
+ '(custom-enabled-themes '(leuven-dark))
+ '(eglot-ignored-server-capabilities '(:hoverProvider :inlayHintProvider)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -50,8 +53,8 @@
 (setq ring-bell-function 'ignore)
 
 ;; Modes
-(fido-mode)
-(fido-vertical-mode)
+;; (fido-mode)
+;; (fido-vertical-mode)
 
 (defun dev-modes ()
   (interactive)
@@ -61,6 +64,7 @@
   (smart-tab-mode)
   (projectile-mode)
   (hl-line-mode)
+  (git-gutter+-mode)
   (setq show-trailing-whitespace t))
 
 (defun marco-grep (pattern)
@@ -94,6 +98,8 @@
 (add-hook 'emacs-lisp-mode-hook 'dev-modes)
 (add-hook 'java-mode-hook 'dev-modes)
 
+(ivy-mode)
+
 (defvar marco-keymap (make-sparse-keymap)
   "Keymap for true global bindings.")
 
@@ -123,10 +129,20 @@
 (set-keybind "M-p" 'switch-to-buffer)
 
 (set-keybind "M-i" 'imenu)
+(set-keybind "M-i" 'counsel-imenu)
+
 (set-keybind "M-k" 'kill-current-buffer)
 
 (set-keybind "M-c" 'projectile-compile-project)
 (set-keybind "M-r" 'projectile-run-project)
+
+(set-keybind "<f10>" 'treemacs)
+
+(set-keybind "M-a" 'projectile-ag)
+
+(set-keybind "<f1>" 'start-kbd-macro)
+(set-keybind "<f2>" 'end-kbd-macro)
+(set-keybind "<f3>" 'call-last-kbd-macro)
 
 (define-minor-mode marco-meta-mode
   "marco-meta-mode is a minor mode for doing modal editing."
@@ -142,3 +158,15 @@
   (if marco-meta-mode
       (setq cursor-type 'box)
     (setq cursor-type 'bar)))
+
+
+(defun keyboard-shit ()
+  "Reconnect keyboard settings."
+  (interactive)
+  (shell-command "xset r rate 200 60")
+  (shell-command "setxkbmap -option caps:super"))
+
+(require 'exec-path-from-shell) ;; if not using the ELPA package
+(exec-path-from-shell-initialize)
+
+(setq mode-require-final-newline nil)
