@@ -14,10 +14,17 @@
 (package-initialize)
 (package-refresh-contents)
 
+(install-if-not 'ag)
+(install-if-not 'async)
 (install-if-not 'atomic-chrome)
+(install-if-not 'cmake-mode)
 (install-if-not 'counsel)
 (install-if-not 'company)
+(install-if-not 'exec-path-from-shell)
 (install-if-not 'ivy)
+(install-if-not 'git-gutter+)
+(install-if-not 'lua-mode)
+(install-if-not 'mood-line)
 (install-if-not 'projectile)
 (install-if-not 'smart-tab)
 (install-if-not 'yaml-mode)
@@ -170,3 +177,7 @@
 (exec-path-from-shell-initialize)
 
 (setq mode-require-final-newline nil)
+
+(mood-line-mode)
+
+;; (cmake-ide-setup)
