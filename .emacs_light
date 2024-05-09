@@ -18,15 +18,18 @@
 (install-if-not 'async)
 (install-if-not 'atomic-chrome)
 (install-if-not 'cmake-mode)
+(install-if-not 'clang-format+)
 (install-if-not 'counsel)
 (install-if-not 'company)
 (install-if-not 'exec-path-from-shell)
 (install-if-not 'ivy)
 (install-if-not 'git-gutter+)
 (install-if-not 'lua-mode)
+(install-if-not 'markdown-mode)
 (install-if-not 'mood-line)
 (install-if-not 'projectile)
 (install-if-not 'smart-tab)
+(install-if-not 'typescript-mode)
 (install-if-not 'yaml-mode)
 
 (custom-set-variables
@@ -34,8 +37,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(leuven-dark))
- '(eglot-ignored-server-capabilities '(:hoverProvider :inlayHintProvider)))
+ '(custom-enabled-themes '(leuven-dark)))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -63,6 +66,8 @@
 ;; (fido-mode)
 ;; (fido-vertical-mode)
 
+(setq dev-eglot t)
+
 (defun dev-modes ()
   (interactive)
   (electric-pair-mode)
@@ -72,11 +77,21 @@
   (projectile-mode)
   (hl-line-mode)
   (git-gutter+-mode)
+  (eldoc-box-hover-mode)
+  (yas-minor-mode)
   (setq show-trailing-whitespace t))
+
+(when dev-eglot (add-hook 'c++-mode-hook 'eglot-ensure))
+(when dev-eglot (add-hook 'c-mode-hook 'eglot-ensure))
 
 (defun marco-grep (pattern)
   (interactive "sPattern: ")
   (setq cmd (format "grep -rn . -ie \'%s\'" pattern))
+  (lgrep cmd))
+
+(defun marco-ag (pattern)
+  (interactive "sPattern: ")
+  (setq cmd (format "ag --line-number --column --color --color-match 30\;43 --color-path 1\;32 --smart-case --stats \'%s\'" pattern))
   (lgrep cmd))
 
 (defun remote-docker-container (user ip container path)
@@ -117,6 +132,7 @@
 (set-keybind "C-r" 'isearch-backward-regexp)
 (set-keybind "C-;" 'comment-line)
 (set-keybind "C-t" 'marco-grep)
+(set-keybind "C-t" 'marco-ag)
 
 (set-keybind "M-/" 'xref-find-references)
 (set-keybind "M-]" 'next-error)
@@ -151,6 +167,8 @@
 (set-keybind "<f2>" 'end-kbd-macro)
 (set-keybind "<f3>" 'call-last-kbd-macro)
 
+(set-keybind "M-l" 'clang-format-region)
+
 (define-minor-mode marco-meta-mode
   "marco-meta-mode is a minor mode for doing modal editing."
   ;; initial value
@@ -173,11 +191,11 @@
   (shell-command "xset r rate 200 60")
   (shell-command "setxkbmap -option caps:super"))
 
-(require 'exec-path-from-shell) ;; if not using the ELPA package
-(exec-path-from-shell-initialize)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (setq mode-require-final-newline nil)
 
+(delete-selection-mode)
 (mood-line-mode)
-
-;; (cmake-ide-setup)
+(global-auto-revert-mode)
