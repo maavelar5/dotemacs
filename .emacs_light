@@ -5,39 +5,155 @@
 
 (require 'package)
 
-(defun install-if-not (package)
-  (when (not (package-installed-p package))
-    (package-install package)))
+(load-file "~/.emacs.d/install-if-not.el")
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(async-start
+ (lambda ()
+   (load-file "~/.emacs.d/install-if-not.el")
+   (marco-install-packages)
+   222)
 
-(package-initialize)
-(package-refresh-contents)
+ (lambda (result)
+   ;; UI
+   (setq dev-eglot t)
 
-(install-if-not 'ag)
-(install-if-not 'async)
-(install-if-not 'atomic-chrome)
-(install-if-not 'cmake-mode)
-(install-if-not 'clang-format+)
-(install-if-not 'counsel)
-(install-if-not 'company)
-(install-if-not 'exec-path-from-shell)
-(install-if-not 'ivy)
-(install-if-not 'git-gutter+)
-(install-if-not 'lua-mode)
-(install-if-not 'markdown-mode)
-(install-if-not 'mood-line)
-(install-if-not 'projectile)
-(install-if-not 'smart-tab)
-(install-if-not 'typescript-mode)
-(install-if-not 'yaml-mode)
+   (defun dev-modes ()
+     (interactive)
+     (electric-pair-mode)
+     (hs-minor-mode)
+     (company-mode)
+     (smart-tab-mode)
+     (projectile-mode)
+     (hl-line-mode)
+     (git-gutter+-mode)
+     (eldoc-box-hover-mode)
+     (yas-minor-mode)
+     (setq show-trailing-whitespace t))
+
+   (when dev-eglot (add-hook 'c++-mode-hook 'eglot-ensure))
+   (when dev-eglot (add-hook 'c-mode-hook 'eglot-ensure))
+
+   (defun marco-grep (pattern)
+     (interactive "sPattern: ")
+     (setq cmd (format "grep -rn . -ie \'%s\'" pattern))
+     (lgrep cmd))
+
+   (defun marco-ag (pattern)
+     (interactive "sPattern: ")
+     (setq cmd (format "ag --line-number --column --color --color-match 30\;43 --color-path 1\;32 --smart-case --stats \'%s\'" pattern))
+     (lgrep cmd))
+
+   (defun remote-docker-container (user ip container path)
+     "Connect to remote docker container"
+     (setq cmd (format "/ssh:%s@%s|docker:%s:%s" user ip container path))
+     (find-file cmd))
+
+   (defun sandbox ()
+     "Run sandbox tfs."
+     (interactive)
+     (remote-docker-container "user" "ip" "container" "path"))
+
+   (defun tfs ()
+     "Run tfs."
+     (interactive)
+     (remote-docker-container "user" "ip" "container" "path"))
+
+
+   (defun ms ()
+     "Run ms."
+     (interactive)
+     (remote-docker-container "user" "ip" "container" "path"))
+
+   (add-hook 'c++-mode-hook 'dev-modes)
+   (add-hook 'c-mode-hook 'dev-modes)
+   (add-hook 'emacs-lisp-mode-hook 'dev-modes)
+   (add-hook 'java-mode-hook 'dev-modes)
+
+   (ivy-mode)
+
+   (defvar marco-keymap (make-sparse-keymap)
+     "Keymap for true global bindings.")
+
+   (defun set-keybind (key func)
+     (define-key marco-keymap (kbd key) func))
+
+   (set-keybind "C-s" 'isearch-forward-regexp)
+   (set-keybind "C-r" 'isearch-backward-regexp)
+   (set-keybind "C-;" 'comment-line)
+   (set-keybind "C-t" 'marco-grep)
+   (set-keybind "C-t" 'marco-ag)
+
+   (set-keybind "M-/" 'xref-find-references)
+   (set-keybind "M-]" 'next-error)
+   (set-keybind "M-[" 'previous-error)
+   (set-keybind "M-e" 'execute-extended-command)
+   (set-keybind "M-h" 'hs-toggle-hiding)
+
+   (set-keybind "M-1" 'delete-other-windows)
+   (set-keybind "M-2" 'split-window-vertically)
+   (set-keybind "M-3" 'split-window-horizontally)
+   (set-keybind "M-4" 'other-window)
+   (set-keybind "M-0" 'delete-window)
+
+   (set-keybind "M-o" 'find-file)
+   (set-keybind "M-O" 'projectile-find-file)
+   (set-keybind "M-s" 'save-buffer)
+   (set-keybind "M-p" 'switch-to-buffer)
+
+   (set-keybind "M-i" 'imenu)
+   (set-keybind "M-i" 'counsel-imenu)
+
+   (set-keybind "M-k" 'kill-current-buffer)
+
+   (set-keybind "M-c" 'projectile-compile-project)
+   (set-keybind "M-r" 'projectile-run-project)
+
+   (set-keybind "<f10>" 'treemacs)
+
+   (set-keybind "M-a" 'projectile-ag)
+
+   (set-keybind "<f1>" 'start-kbd-macro)
+   (set-keybind "<f2>" 'end-kbd-macro)
+   (set-keybind "<f3>" 'call-last-kbd-macro)
+
+   (set-keybind "M-l" 'clang-format-region)
+
+   (define-minor-mode marco-meta-mode
+     "marco-meta-mode is a minor mode for doing modal editing."
+     ;; initial value
+     :init-value t
+     :global nil
+     ;; indicator for mode line
+     :lighter " mgk "
+     :group 'marco-meta-group
+
+     :keymap marco-keymap
+
+     (if marco-meta-mode
+         (setq cursor-type 'box)
+       (setq cursor-type 'bar)))
+
+
+   (defun keyboard-shit ()
+     "Reconnect keyboard settings."
+     (interactive)
+     (shell-command "xset r rate 200 60")
+     (shell-command "setxkbmap -option caps:super"))
+
+   (when (memq window-system '(mac ns x))
+     (exec-path-from-shell-initialize))
+
+   (exec-path-from-shell-copy-env "LD_LIBRARY_PATH")
+   (exec-path-from-shell-copy-env "KEPLER_SDK_PATH")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(leuven-dark)))
+ '(custom-enabled-themes '(theasy))
+ '(custom-safe-themes
+   '("52aab7b0b907cd79185cf37b20f155a2689ef90e991e1e2d177c7658ce18032c" default)))
 
 
 (custom-set-faces
@@ -47,7 +163,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 110 :family "Liberation Mono")))))
 
-;; UI
 (fringe-mode 1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -65,134 +180,6 @@
 ;; Modes
 ;; (fido-mode)
 ;; (fido-vertical-mode)
-
-(setq dev-eglot t)
-
-(defun dev-modes ()
-  (interactive)
-  (electric-pair-mode)
-  (hs-minor-mode)
-  (company-mode)
-  (smart-tab-mode)
-  (projectile-mode)
-  (hl-line-mode)
-  (git-gutter+-mode)
-  (eldoc-box-hover-mode)
-  (yas-minor-mode)
-  (setq show-trailing-whitespace t))
-
-(when dev-eglot (add-hook 'c++-mode-hook 'eglot-ensure))
-(when dev-eglot (add-hook 'c-mode-hook 'eglot-ensure))
-
-(defun marco-grep (pattern)
-  (interactive "sPattern: ")
-  (setq cmd (format "grep -rn . -ie \'%s\'" pattern))
-  (lgrep cmd))
-
-(defun marco-ag (pattern)
-  (interactive "sPattern: ")
-  (setq cmd (format "ag --line-number --column --color --color-match 30\;43 --color-path 1\;32 --smart-case --stats \'%s\'" pattern))
-  (lgrep cmd))
-
-(defun remote-docker-container (user ip container path)
-  "Connect to remote docker container"
-  (setq cmd (format "/ssh:%s@%s|docker:%s:%s" user ip container path))
-  (find-file cmd))
-
-(defun sandbox ()
-  "Run sandbox tfs."
-  (interactive)
-  (remote-docker-container "user" "ip" "container" "path"))
-
-(defun tfs ()
-  "Run tfs."
-  (interactive)
-  (remote-docker-container "user" "ip" "container" "path"))
-
-
-(defun ms ()
-  "Run ms."
-  (interactive)
-  (remote-docker-container "user" "ip" "container" "path"))
-
-(add-hook 'c++-mode-hook 'dev-modes)
-(add-hook 'c-mode-hook 'dev-modes)
-(add-hook 'emacs-lisp-mode-hook 'dev-modes)
-(add-hook 'java-mode-hook 'dev-modes)
-
-(ivy-mode)
-
-(defvar marco-keymap (make-sparse-keymap)
-  "Keymap for true global bindings.")
-
-(defun set-keybind (key func)
-  (define-key marco-keymap (kbd key) func))
-
-(set-keybind "C-s" 'isearch-forward-regexp)
-(set-keybind "C-r" 'isearch-backward-regexp)
-(set-keybind "C-;" 'comment-line)
-(set-keybind "C-t" 'marco-grep)
-(set-keybind "C-t" 'marco-ag)
-
-(set-keybind "M-/" 'xref-find-references)
-(set-keybind "M-]" 'next-error)
-(set-keybind "M-[" 'previous-error)
-(set-keybind "M-e" 'execute-extended-command)
-(set-keybind "M-h" 'hs-toggle-hiding)
-
-(set-keybind "M-1" 'delete-other-windows)
-(set-keybind "M-2" 'split-window-vertically)
-(set-keybind "M-3" 'split-window-horizontally)
-(set-keybind "M-4" 'other-window)
-(set-keybind "M-0" 'delete-window)
-
-(set-keybind "M-o" 'find-file)
-(set-keybind "M-O" 'projectile-find-file)
-(set-keybind "M-s" 'save-buffer)
-(set-keybind "M-p" 'switch-to-buffer)
-
-(set-keybind "M-i" 'imenu)
-(set-keybind "M-i" 'counsel-imenu)
-
-(set-keybind "M-k" 'kill-current-buffer)
-
-(set-keybind "M-c" 'projectile-compile-project)
-(set-keybind "M-r" 'projectile-run-project)
-
-(set-keybind "<f10>" 'treemacs)
-
-(set-keybind "M-a" 'projectile-ag)
-
-(set-keybind "<f1>" 'start-kbd-macro)
-(set-keybind "<f2>" 'end-kbd-macro)
-(set-keybind "<f3>" 'call-last-kbd-macro)
-
-(set-keybind "M-l" 'clang-format-region)
-
-(define-minor-mode marco-meta-mode
-  "marco-meta-mode is a minor mode for doing modal editing."
-  ;; initial value
-  :init-value t
-  :global nil
-  ;; indicator for mode line
-  :lighter " mgk "
-  :group 'marco-meta-group
-
-  :keymap marco-keymap
-
-  (if marco-meta-mode
-      (setq cursor-type 'box)
-    (setq cursor-type 'bar)))
-
-
-(defun keyboard-shit ()
-  "Reconnect keyboard settings."
-  (interactive)
-  (shell-command "xset r rate 200 60")
-  (shell-command "setxkbmap -option caps:super"))
-
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
 
 (setq mode-require-final-newline nil)
 
