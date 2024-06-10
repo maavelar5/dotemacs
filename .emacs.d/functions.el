@@ -80,8 +80,8 @@
       ;; (if (window-system)
           ;; (fira-code-mode)))
 
-  (when dev-column
-    (column-enforce-mode))
+  ;; (when dev-column
+    ;; (column-enforce-mode))
 
   (company-mode t)
   (hs-minor-mode t)
@@ -96,7 +96,7 @@
   (setq show-trailing-whitespace t)
   (setq indent-tabs-mode nil))
 
-(when dev-eglot (add-hook 'c++-mode-hook 'eglot-ensure))
+;; (when dev-eglot (add-hook 'c++-mode-hook 'eglot-ensure))
 
 (defun v-split-move ()
   "Needed a mid shit."
@@ -543,6 +543,11 @@
              prompt)))
     (projectile-compile-project prompt)))
 
+(defun marco-ag (pattern)
+  (interactive "sPattern: ")
+  (setq filename (buffer-file-name))
+  (setq path (file-name-directory filename))
+  (ag pattern path))
 
 (provide 'functions)
 ;;; functions.el ends here
