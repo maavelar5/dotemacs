@@ -3,6 +3,9 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
+
 (require 'package)
 
 (load-file "~/.emacs.d/install-if-not.el")
@@ -51,22 +54,6 @@
      (setq cmd (format "/ssh:%s@%s|docker:%s:%s" user ip container path))
      (find-file cmd))
 
-   (defun sandbox ()
-     "Run sandbox tfs."
-     (interactive)
-     (remote-docker-container "user" "ip" "container" "path"))
-
-   (defun tfs ()
-     "Run tfs."
-     (interactive)
-     (remote-docker-container "user" "ip" "container" "path"))
-
-
-   (defun ms ()
-     "Run ms."
-     (interactive)
-     (remote-docker-container "user" "ip" "container" "path"))
-
    (add-hook 'c++-mode-hook 'dev-modes)
    (add-hook 'c-mode-hook 'dev-modes)
    (add-hook 'emacs-lisp-mode-hook 'dev-modes)
@@ -74,69 +61,37 @@
 
    (ivy-mode)
 
-   (defvar marco-keymap (make-sparse-keymap)
-     "Keymap for true global bindings.")
+   (evil-mode 1)
 
-   (defun set-keybind (key func)
-     (define-key marco-keymap (kbd key) func))
+   (evil-set-leader 'normal " ")
+   (evil-set-leader 'visual " ")
 
-   (set-keybind "C-s" 'isearch-forward-regexp)
-   (set-keybind "C-r" 'isearch-backward-regexp)
-   (set-keybind "C-;" 'comment-line)
-   (set-keybind "C-t" 'marco-grep)
-   (set-keybind "C-t" 'marco-ag)
 
-   (set-keybind "M-/" 'xref-find-references)
-   (set-keybind "M-]" 'next-error)
-   (set-keybind "M-[" 'previous-error)
-   (set-keybind "M-e" 'execute-extended-command)
-   (set-keybind "M-h" 'hs-toggle-hiding)
+   (evil-define-key 'normal 'global (kbd "<leader>g") 'avy-goto-char)
+   (evil-define-key 'normal 'global (kbd "<leader>w") 'save-buffer)
+   (evil-define-key 'normal 'global (kbd "<leader>e") 'counsel-M-x)
+   (evil-define-key 'normal 'global (kbd "<leader>c") 'delete-window)
+   (evil-define-key 'normal 'global (kbd "<leader>1") 'delete-other-windows)
+   (evil-define-key 'normal 'global (kbd "<leader>h") 'split-window-vertically)
+   (evil-define-key 'normal 'global (kbd "<leader>v") 'split-window-horizontally)
+   (evil-define-key 'normal 'global (kbd "<leader>o") 'other-window)
+   (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-current-buffer)
+   (evil-define-key 'normal 'global (kbd "<leader>F") 'projectile-find-file)
+   (evil-define-key 'normal 'global (kbd "<leader>b") 'counsel-switch-buffer)
+   (evil-define-key 'normal 'global (kbd "<leader>f") 'counsel-find-file)
+   (evil-define-key 'normal 'global (kbd "<leader>i") 'counsel-imenu)
+   (evil-define-key 'normal 'global (kbd "<leader>;") 'comment-line)
+   ;; (evil-define-key 'normal 'global (kbd "<leader>j") 'next-buffer)
+   ;; (evil-define-key 'normal 'global (kbd "<leader>k") 'previous-buffer)
+   (evil-define-key 'normal 'global (kbd "<leader>n") 'next-error)
+   (evil-define-key 'normal 'global (kbd "<leader>p") 'previous-error)
+   (evil-define-key 'normal 'global (kbd "gb") 'evil-jump-backward)
+   (evil-define-key 'normal 'global (kbd "gf") 'evil-jump-forward)
+   (evil-define-key 'normal 'global (kbd "<leader>l") 'clang-format-region)
+   (evil-define-key 'normal 'global (kbd "<leader><TAB>") 'hs-toggle-hiding)
 
-   (set-keybind "M-1" 'delete-other-windows)
-   (set-keybind "M-2" 'split-window-vertically)
-   (set-keybind "M-3" 'split-window-horizontally)
-   (set-keybind "M-4" 'other-window)
-   (set-keybind "M-0" 'delete-window)
-
-   (set-keybind "M-o" 'find-file)
-   (set-keybind "M-O" 'projectile-find-file)
-   (set-keybind "M-s" 'save-buffer)
-   (set-keybind "M-p" 'switch-to-buffer)
-
-   (set-keybind "M-i" 'imenu)
-   (set-keybind "M-i" 'counsel-imenu)
-
-   (set-keybind "M-k" 'kill-current-buffer)
-
-   (set-keybind "M-c" 'projectile-compile-project)
-   (set-keybind "M-r" 'projectile-run-project)
-
-   (set-keybind "<f10>" 'treemacs)
-
-   (set-keybind "M-a" 'projectile-ag)
-
-   (set-keybind "<f1>" 'start-kbd-macro)
-   (set-keybind "<f2>" 'end-kbd-macro)
-   (set-keybind "<f3>" 'call-last-kbd-macro)
-
-   (set-keybind "M-l" 'clang-format-region)
-   (set-keybind "M-u" 'magit-status)
-
-   (define-minor-mode marco-meta-mode
-     "marco-meta-mode is a minor mode for doing modal editing."
-     ;; initial value
-     :init-value t
-     :global nil
-     ;; indicator for mode line
-     :lighter " mgk "
-     :group 'marco-meta-group
-
-     :keymap marco-keymap
-
-     (if marco-meta-mode
-         (setq cursor-type 'box)
-       (setq cursor-type 'bar)))
-
+   (setq evil-collection-setup-minibuffer t)
+   (evil-collection-init)
 
    (defun keyboard-shit ()
      "Reconnect keyboard settings."
@@ -155,9 +110,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(leuven-dark))
+ '(custom-enabled-themes '(theasy))
  '(custom-safe-themes
-   '("f079ef5189f9738cf5a2b4507bcaf83138ad22d9c9e32a537d61c9aae25502ef" default)))
+   '("52aab7b0b907cd79185cf37b20f155a2689ef90e991e1e2d177c7658ce18032c" default))
+ '(package-selected-packages
+   '(linum-relative zenburn-theme yasnippet-snippets yaml-mode which-key-posframe vterm undo-tree typescript-mode smart-tab projectile popup nlinum-relative mood-line markdown-mode magit lua-mode git-gutter+ exec-path-from-shell evil-leader evil-escape evil-collection eldoc-box eglot counsel company cmake-mode clang-format+ autothemer atomic-chrome async ag)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -191,3 +148,6 @@
 (global-auto-revert-mode)
 
 (server-start)
+
+(setq display-line-numbers-type 'relative) 
+(global-display-line-numbers-mode)
