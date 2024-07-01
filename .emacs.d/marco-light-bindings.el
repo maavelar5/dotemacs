@@ -25,6 +25,7 @@
 (set-keybind "M-p" 'switch-to-buffer)
 
 (set-keybind "M-i" 'imenu)
+(set-keybind "M-i" 'counsel-imenu)
 (set-keybind "M-k" 'kill-current-buffer)
 
 (set-keybind "M-c" 'projectile-compile-project)
@@ -37,3 +38,4 @@
 (set-keybind "<f3>" 'call-last-kbd-macro)
 
 (set-keybind "M-l" 'clang-format-region)
+(set-keybind "M-u" 'ff-find-related-file)
