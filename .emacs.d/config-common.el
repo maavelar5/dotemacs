@@ -14,7 +14,12 @@
 (setq inhibit-startup-screen t)
 (setq-default indent-tabs-mode nil)
 (setq org-image-actual-width nil)
+(setq eglot-events-buffer-size 0)
+(setq eglot-sync-connect nil)
+(setq eglot-connect-timeout nil)
+(fset #'jsonrpc--log-event #'ignore)
 
+(add-hook 'focus-out-hook 'garbage-collect)
 (exec-path-from-shell-copy-env "LD_LIBRARY_PATH")
 (exec-path-from-shell-copy-env "KEPLER_SDK_PATH")
 

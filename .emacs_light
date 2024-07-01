@@ -1,16 +1,3 @@
-(setq packages-to-install
-      (list 'ag
-            'ivy
-            'counsel
-            'clang-format+
-            'projectile
-            'cmake-mode
-            'company
-            'exec-path-from-shell
-            'smart-tab))
-
-(load-file "~/.emacs.d/install-if-not.el")
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,16 +12,16 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 110 :family "Liberation Mono")))))
 
-(load-file "~/.emacs.d/marco-mode.el")
-(load-file "~/.emacs.d/config-common.el")
-;; (load-file "~/.emacs.d/marco-light-bindings.el") 
-(load-file "~/.emacs.d/marco-light-evil.el") 
+(setq packages-to-install
+      (list 'ag
+            'ivy
+            'counsel
+            'clang-format+
+            'projectile
+            'cmake-mode
+            'company
+            'exec-path-from-shell
+            'smart-tab))
 
-(atomic-chrome-start-server)
-
-(fset #'jsonrpc--log-event #'ignore)
-(setq eglot-events-buffer-size 0)
-(setq eglot-sync-connect nil)
-
-(add-hook 'focus-out-hook 'garbage-collect)
-(setq eglot-connect-timeout nil)
+(load-file "~/.emacs.d/install-if-not.el")
+(marco-install-packages-async packages-to-install)
