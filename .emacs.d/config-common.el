@@ -19,7 +19,13 @@
 (setq eglot-connect-timeout nil)
 (fset #'jsonrpc--log-event #'ignore)
 
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)
 (add-hook 'focus-out-hook 'garbage-collect)
+
+(add-hook 'c-mode-hook #'eldoc-box-hover-mode t)
+(add-hook 'c++-mode-hook #'eldoc-box-hover-mode t)
 (exec-path-from-shell-copy-env "LD_LIBRARY_PATH")
 (exec-path-from-shell-copy-env "KEPLER_SDK_PATH")
 
@@ -32,6 +38,6 @@
 (global-company-mode)
 (global-smart-tab-mode)
 (electric-pair-mode)
-(global-git-gutter+-mode)
+(global-git-gutter-mode)
 
 (provide 'config-common)

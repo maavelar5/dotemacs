@@ -1,27 +1,62 @@
+(setq inhibit-startup-screen t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(leuven-dark)))
+ '(custom-enabled-themes '(leuven-dark))
+ '(evil-collection-mode-list
+   '(2048-game ag alchemist anaconda-mode apropos arc-mode atomic-chrome auto-package-update beginend bluetooth bm bookmark
+               (buff-menu "buff-menu")
+               bufler calc calendar cider cmake-mode color-rg comint company compile consult corfu crdt
+               (csv "csv-mode")
+               (custom cus-edit)
+               cus-theme dape dashboard daemons deadgrep debbugs debug devdocs dictionary diff-hl diff-mode dired-lol dired-sidebar disk-usage distel doc-view docker eat ebib ebuku edbi edebug ediff eglot elpaca ement explain-pause-mode eldoc elfeed elisp-mode elisp-refs elisp-slime-nav embark emms emoji epa ert eshell eval-sexp-fu evil-mc eww fanyi finder flycheck flymake forge free-keys geiser ggtags git-timemachine gited gnus go-mode grep guix hackernews helm help helpful hg-histedit hungry-delete hyrolo ibuffer
+               (image image-mode)
+               image-dired image+ imenu imenu-list
+               (indent "indent")
+               indium info ivy js2-mode leetcode lispy lms log-edit log-view lsp-ui-imenu lua-mode kotlin-mode macrostep man
+               (magit magit-submodule)
+               magit-repos magit-section magit-todos markdown-mode monky mpc mpdel mpdired mu4e mu4e-conversation neotree newsticker notmuch nov omnisharp org org-present org-roam osx-dictionary outline p4
+               (package-menu package)
+               pass
+               (pdf pdf-view)
+               popup proced
+               (process-menu simple)
+               prodigy profiler python quickrun racer racket-describe realgud reftex replace restclient rg ripgrep rjsx-mode robe rtags ruby-mode scheme scroll-lock selectrum sh-script shortdoc simple simple-mpc slime sly snake so-long speedbar tab-bar tablist tabulated-list tar-mode telega
+               (term term ansi-term multi-term)
+               tetris thread tide timer-list transmission trashed tuareg typescript-mode vc-annotate vc-dir vc-git vdiff vertico view vlf vterm vundo w3m wdired wgrep which-key with-editor woman xref xwidget yaml-mode youtube-dl zmusic
+               (ztree ztree-diff ztree-dir)))
+ '(package-selected-packages
+   '(prettier jenkinsfile-mode js3-mode magit rjsx-mode highlight-indent-guides json-mode json-navigator json-snatcher jsonrpc git-blamed git-gutter-fringe blamer evil-collection evil eldoc-box treemacs nyan-mode ivy typescript-mode smart-tab projectile lsp-mode exec-path-from-shell counsel company cmake-mode clang-format+ async ag))
+ '(typescript-indent-level 2))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 110 :family "Liberation Mono")))))
+ '(default ((t (:height 110 :family "Liberation Mono"))))
+ '(lsp-headerline-breadcrumb-path-face ((t (:inherit font-lock-string-face :height 0.7))))
+ '(lsp-headerline-breadcrumb-symbols-face ((t (:inherit font-lock-doc-face :weight bold :height 0.7)))))
 
 (setq packages-to-install
       (list 'ag
-            'ivy
-            'counsel
             'clang-format+
-            'projectile
             'cmake-mode
             'company
+            'counsel
+            'eldoc-box
+            'evil
+            'evil-collection
             'exec-path-from-shell
-            'smart-tab))
+            'git-gutter-fringe
+            'ivy
+            'lsp-mode
+            'projectile
+            'smart-tab
+            'typescript-mode))
 
 (load-file "~/.emacs.d/install-if-not.el")
 (marco-install-packages-async packages-to-install)

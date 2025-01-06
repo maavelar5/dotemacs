@@ -38,8 +38,8 @@
    (lambda (result)
      (message "already here?")
      (load-file "~/.emacs.d/config-common.el")
-     (load-file "~/.emacs.d/marco-light-bindings.el")
-     ;; (load-file "~/.emacs.d/marco-light-evil.el")
+     ;; (load-file "~/.emacs.d/marco-light-bindings.el")
+     (load-file "~/.emacs.d/marco-light-evil.el")
    )))
 
 (provide 'install-if-not)
