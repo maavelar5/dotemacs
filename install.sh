@@ -16,6 +16,8 @@ rm -rf pikaur
 
 pikaur -S brave-bin
 
+cd ../
+
 sudo cp theasy.rasi /usr/share/rofi/themes/
 
 ./autologin.sh
